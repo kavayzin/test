@@ -1,0 +1,43 @@
+{
+  "name": "email-form",
+  "version": "0.0.1",
+  "description": "Minimalistic email form",
+  "engines": {
+    "node": ">= 12.13 <13"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.21",
+    "@types/node": "^12.12.5",
+    "css-loader": "^3.3.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "~24.9.0",
+    "node-sass": "^4.13.0",
+    "prettier": "~1.18.2",
+    "rimraf": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.1",
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.1",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-microsoft-contrib": "~6.2.0",
+    "tsutils": "~3.17.0",
+    "typescript": "^3.7.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "scripts": {
+    "serve": "webpack-dev-server",
+    "clean": "rimraf coverage build tmp",
+    "build": "webpack --config=webpack.config.production.js --mode=production",
+    "lint": "tslint -t stylish --project \"tsconfig.lint.json\"",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "tslib": "~1.10.0"
+  }
+}

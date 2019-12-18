@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "build",
+    "outFile": "./build/bundle.js",
+    "target": "ES5",
+    "module": "System",
+    "removeComments": true,
+    "sourceMap": false,
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

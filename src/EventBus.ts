@@ -1,5 +1,4 @@
 class EventBus implements IEventBus {
-  // Типизировать
   private subscriptions: any = {}
   private contexts: any = {}
 

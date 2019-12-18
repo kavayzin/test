@@ -32,12 +32,12 @@
             rootEl: el,
             buttons: [{
                text: 'Add email',
-               onclick() {
+               onclick: function () {
                   this.addEmail(generateEmail());
                }
             }, {
                text: 'Get emails count',
-               onclick() {
+               onclick: function () {
                   const emails = this.getEmails();
                   alert(emails.length);
                }

@@ -45,7 +45,7 @@
          }
          const form = new EmailsEditor(options);
          // subscribe to the event
-         form.on('onEmailListChanged', (emails) => {
+         form.on('onEmailListChanged',function (emails) {
             console.log(emails);
          })
       });

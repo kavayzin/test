@@ -58,3 +58,14 @@
 </html>
 
 ```
+
+## Methods 
+Name                | Parameters                               | Info
+------------------- | ---------------------------------------- | --------------------------------------------------------------------------
+addEnail             |  string                                        | Splits the string and adds the resulting entities to the editor
+removeEmail      |     string                                     | Splits the string and removes the resulting entities from the editor
+
+## Events
+Name            | Info
+--------------- | --------------------------------------------------------------------------
+onEmailListChanged             | A email list has been changed

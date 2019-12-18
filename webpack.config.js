@@ -25,10 +25,10 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'preview')
+    path: path.resolve(__dirname, 'build')
   },
   devServer: {
-    contentBase: path.join(__dirname, 'preview'),
+    contentBase: path.join(__dirname, 'build'),
     compress: true,
     port: 9000
   }

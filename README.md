@@ -52,6 +52,10 @@
             }]
          }
          const form = new EmailsEditor(options);
+         // subscribe to the event
+         form.on('onEmailListChanged', (emails) => {
+            console.log(emails);
+         })
       });
    </script>
  </body>

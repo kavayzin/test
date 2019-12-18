@@ -91,7 +91,7 @@ class EmailsEditor {
         changesMade = true;
       });
     if (changesMade) {
-      this.$event.emit('onEmailListChanged', this.getEmails());
+      this.$event.emit('onEmailListChanged', this.getValues());
     }
   }
 
@@ -109,7 +109,7 @@ class EmailsEditor {
         changesMade = true;
       });
       if (changesMade) {
-        this.$event.emit('onEmailListChanged', this.getEmails());
+        this.$event.emit('onEmailListChanged', this.getValues());
       }
   }
 
@@ -143,6 +143,14 @@ class EmailsEditor {
       if (emailItem.status === EmailStatuses.CORRECT) {
         result.push(emailItem.value);
       }
+    });
+    return result;
+  }
+
+  getValues() {
+    const result = [];
+    this.emails.forEach((emailItem: IEmailItem) => {
+      result.push(emailItem.value);
     });
     return result;
   }

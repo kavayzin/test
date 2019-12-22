@@ -3,6 +3,8 @@ import {
   checkEmail
 } from './utils';
 
+import * as Utils from './utils';
+
 import {
   IEventBus,
   EventBus,
@@ -114,7 +116,6 @@ class EmailsEditor {
   }
 
   prepareEmail(emailString: string): IEmailItem {
-    const self = this;
     const status = checkEmail(emailString) ? EmailStatuses.CORRECT : EmailStatuses.WRONG;
     const result: IEmailItem = {
       id: Symbol(),
@@ -123,12 +124,12 @@ class EmailsEditor {
     };
     const itemModifierClass = status === EmailStatuses.CORRECT ? 'emails-editor__item_correct' : 'emails-editor__item_wrong';
     const textModifierClass = status === EmailStatuses.CORRECT ? 'emails-editor__item-inner-text_correct' : 'emails-editor__item-inner-text_wrong';
-    const el = (
+    const el = Utils.render(
       <div className={`emails-editor__item ${itemModifierClass}`}>
         <div className={`emails-editor__item-inner-text ${textModifierClass}`}>{emailString}</div>
         <div className="emails-editor__item-remove-button" onclick={() => {this.onEmailBlockRemoveButtonClick(result)}}></div>
       </div>
-    );
+    , this);
     result.el = el;
     return result
   }
@@ -211,7 +212,6 @@ class EmailsEditor {
   }
 
   render() {
-    const self = this;
     const { rootEl, buttons } = this.options;
     rootEl.innerText = '';
 
@@ -224,7 +224,7 @@ class EmailsEditor {
       )
     });
 
-    const result = (
+    const vNodes = (
       <div className="email-modal">
         <div className="email-modal__content">
             <div className="email-modal__title">
@@ -253,7 +253,8 @@ class EmailsEditor {
         </div>
       </div>
     );
-
+    
+    const result = Utils.render(vNodes, this);
     this.options.rootEl.append(result);
   }
 }

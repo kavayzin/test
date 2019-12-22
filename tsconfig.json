@@ -8,7 +8,7 @@
     "allowJs": true,
     "importHelpers": true,
     "jsx": "react",
-    "jsxFactory": "self.createElement",
+    "jsxFactory": "Utils.createElement",
     "alwaysStrict": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,

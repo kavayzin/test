@@ -188,7 +188,7 @@ class EmailsEditor {
     const { emailsEditorInputEl } = this.$refs;
     const value = emailsEditorInputEl.value;
     const availableCodes = ['Enter', 'NumpadEnter', 'Comma', 'Space'];
-    if (availableCodes.indexOf(e.code) > -1 && value) {
+    if (availableCodes.indexOf(e.code) > -1 && !e.metaKey && value) {
       this.clearEmailsInput();
       this.addEmail(value);
       emailsEditorInputEl.focus();

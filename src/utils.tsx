@@ -3,42 +3,6 @@ function checkEmail(emailString: string): Boolean {
   return emailRegex.test(emailString);
 }
 
-// createElement(type: string, props: any = {}, ...children: HTMLElement[]): HTMLElement {
-//   if (!props) {
-//     props = {};
-//   }
-//   const el = document.createElement(type);
-//   const propKeys = Object.keys(props);
-//   propKeys.forEach((propKey: string) => {
-//     if (propKey[0] === 'o' && propKey[1] === 'n') {
-//       const eventName = propKey.substring(2);
-//       el.addEventListener(eventName, (e: Event) => {
-//         props[propKey].call(this, e);
-//       });
-//     } else if (propKey === 'className') {
-//       const classes = props[propKey].split(' ');
-//       classes.forEach((className: string) => {
-//         el.classList.add(className);
-//       });
-//     } else if (propKey === 'ref') {
-//       const refName = props[propKey];
-//       this.$refs[refName] = el;
-//     }
-//   });
-
-//   children.forEach((child: HTMLElement | HTMLElement[]) => {
-//     if (Array.isArray(child)) {
-//       child.forEach((c: HTMLElement) => {
-//         el.append(c);
-//       })
-//     } else {
-//       el.append(child);
-//     }
-//   });
-
-//   return el;
-// }
-
 function createElement(type: string, props: any, ...children: IVNode[] | string[]): IVNode {
   return {
     type,

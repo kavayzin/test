@@ -40,5 +40,8 @@
   "dependencies": {
     "tslib": "~1.10.0"
   },
-  "main": "./lib/module.js"
+  "main": "./lib/module.js",
+  "files": [
+    "./lib/moodule.js"
+  ]
 }

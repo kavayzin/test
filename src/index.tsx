@@ -239,9 +239,6 @@ enum EmailStatuses {
   WRONG = 'wrong',
 }
 
-//@ts-ignore
-window.EmailsEditor = EmailsEditor;
-
 export {
   EmailsEditor,
   IFormOptions,

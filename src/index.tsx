@@ -3,6 +3,8 @@ import {
   checkEmail
 } from './utils';
 
+import * as Utils from './utils';
+
 import {
   IEventBus,
   EventBus,
@@ -27,57 +29,15 @@ class EmailsEditor {
     this.render();
   }
 
-  on(eventName: string, callback: Function) {
+  public on(eventName: string, callback: Function) {
     this.$event.on(eventName, callback);
   }
 
-  off(eventName: string, callback: Function) {
+  public off(eventName: string, callback: Function) {
     this.$event.off(eventName, callback);
   }
 
-  createElement(type: string, props: any = {}, ...children: HTMLElement[]): HTMLElement {
-    if (!props) {
-      props = {};
-    }
-    const el = document.createElement(type);
-    const propKeys = Object.keys(props);
-    propKeys.forEach((propKey: string) => {
-      if (propKey[0] === 'o' && propKey[1] === 'n') {
-        const eventName = propKey.substring(2);
-        el.addEventListener(eventName, (e: Event) => {
-          props[propKey].call(this, e);
-        });
-      } else if (propKey === 'className') {
-        const classes = props[propKey].split(' ');
-        classes.forEach((className: string) => {
-          el.classList.add(className);
-        });
-      } else if (propKey === 'ref') {
-        const refName = props[propKey];
-        this.$refs[refName] = el;
-      }
-    });
-
-    children.forEach((child: HTMLElement | HTMLElement[]) => {
-      if (Array.isArray(child)) {
-        child.forEach((c: HTMLElement) => {
-          el.append(c);
-        })
-      } else {
-        el.append(child);
-      }
-    });
-
-    return el;
-  }
-
-  onBlurTextInput(e: FocusEvent) {
-    const target = e.target as HTMLInputElement;
-    const emailString = target.value;
-    this.addEmail(emailString);
-  }
-
-  addEmail(string: string) {
+  public addEmail(string: string) {
     const { emailsEditorInnerEL, emailsEditorInputWrapperEl } = this.$refs;
     const { emails } = this;
     let changesMade = false;
@@ -95,7 +55,7 @@ class EmailsEditor {
     }
   }
 
-  removeEmail(string: string) {
+  public removeEmail(string: string) {
     const { emailsEditorInnerEL } = this.$refs;
     const { emails } = this;
     let changesMade = false;
@@ -113,8 +73,7 @@ class EmailsEditor {
       }
   }
 
-  prepareEmail(emailString: string): IEmailItem {
-    const self = this;
+  private prepareEmail(emailString: string): IEmailItem {
     const status = checkEmail(emailString) ? EmailStatuses.CORRECT : EmailStatuses.WRONG;
     const result: IEmailItem = {
       id: Symbol(),
@@ -123,21 +82,21 @@ class EmailsEditor {
     };
     const itemModifierClass = status === EmailStatuses.CORRECT ? 'emails-editor__item_correct' : 'emails-editor__item_wrong';
     const textModifierClass = status === EmailStatuses.CORRECT ? 'emails-editor__item-inner-text_correct' : 'emails-editor__item-inner-text_wrong';
-    const el = (
+    const el = Utils.render(
       <div className={`emails-editor__item ${itemModifierClass}`}>
         <div className={`emails-editor__item-inner-text ${textModifierClass}`}>{emailString}</div>
         <div className="emails-editor__item-remove-button" onclick={() => {this.onEmailBlockRemoveButtonClick(result)}}></div>
       </div>
-    );
+    , this);
     result.el = el;
     return result
   }
 
-  onEmailBlockRemoveButtonClick(emailItem: IEmailItem) {
+  private onEmailBlockRemoveButtonClick(emailItem: IEmailItem) {
     this.removeEmail(emailItem.value);
   }
 
-  getEmails(): string[] {
+  public getEmails(): string[] {
     const result = [];
     this.emails.forEach((emailItem: IEmailItem) => {
       if (emailItem.status === EmailStatuses.CORRECT) {
@@ -147,7 +106,7 @@ class EmailsEditor {
     return result;
   }
 
-  getValues() {
+  public getValues() {
     const result = [];
     this.emails.forEach((emailItem: IEmailItem) => {
       result.push(emailItem.value);
@@ -155,11 +114,11 @@ class EmailsEditor {
     return result;
   }
 
-  onEmailsEditorClick() {
+  private onEmailsEditorClick() {
     this.$refs.emailsEditorInputEl.focus();
   }
 
-  onEmailsEditorInputBlur() {
+  private onEmailsEditorInputBlur() {
     const { emailsEditorInputEl } = this.$refs;
     const value = emailsEditorInputEl.value;
     this.clearEmailsInput();
@@ -167,7 +126,7 @@ class EmailsEditor {
     this.addEmail(value);
   }
 
-  onEmailsEditorInputKeyDown(e: InputEvent) {
+  private onEmailsEditorInputKeyDown(e: InputEvent) {
     const { emailsEditorInputEl, emailsEditorInputInnerEL } = this.$refs;
     const value = emailsEditorInputEl.value;
     emailsEditorInputInnerEL.innerText = value;
@@ -183,35 +142,34 @@ class EmailsEditor {
     }
   }
 
-  onEmailsEditorInputKeyUp(e: KeyboardEvent) {
+  private onEmailsEditorInputKeyUp(e: KeyboardEvent) {
     const { emailsEditorInputEl } = this.$refs;
     const value = emailsEditorInputEl.value;
     const availableCodes = ['Enter', 'NumpadEnter', 'Comma', 'Space'];
-    if (availableCodes.indexOf(e.code) > -1 && value) {
+    if (availableCodes.indexOf(e.code) > -1 && !e.metaKey && value) {
       this.clearEmailsInput();
       this.addEmail(value);
       emailsEditorInputEl.focus();
     }
   }
 
-  hideEmailsEditorPlaceholder() {
+  private hideEmailsEditorPlaceholder() {
     const { emailsEditorInputPlaceholder } = this.$refs;
     emailsEditorInputPlaceholder.style.display = 'none';
   }
 
-  showEmailsEditorPlaceholder() {
+  private showEmailsEditorPlaceholder() {
     const { emailsEditorInputPlaceholder } = this.$refs;
     emailsEditorInputPlaceholder.style.display = '';
   }
 
-  clearEmailsInput() {
+  private clearEmailsInput() {
     const { emailsEditorInputEl, emailsEditorInputInnerEL } = this.$refs;
     emailsEditorInputEl.value = '';
     emailsEditorInputInnerEL.innerText = '';
   }
 
-  render() {
-    const self = this;
+  private render() {
     const { rootEl, buttons } = this.options;
     rootEl.innerText = '';
 
@@ -224,7 +182,7 @@ class EmailsEditor {
       )
     });
 
-    const result = (
+    const vNodes = (
       <div className="email-modal">
         <div className="email-modal__content">
             <div className="email-modal__title">
@@ -253,7 +211,8 @@ class EmailsEditor {
         </div>
       </div>
     );
-
+    
+    const result = Utils.render(vNodes, this);
     this.options.rootEl.append(result);
   }
 }
@@ -279,9 +238,6 @@ enum EmailStatuses {
   CORRECT = 'correct',
   WRONG = 'wrong',
 }
-
-//@ts-ignore
-window.EmailsEditor = EmailsEditor;
 
 export {
   EmailsEditor,
